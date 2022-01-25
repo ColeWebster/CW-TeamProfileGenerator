@@ -1,8 +1,10 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
-
 const questions = require('./utils/questions');
 const generateHTML = require('./utils/generateHTML');
+// Import Employee Manager Engineer Intern
+
+
 
 const newPage = async () => {
     const answers = await inquirer.prompt(questions);
@@ -17,3 +19,9 @@ const writeToFile = (htmlDirectContent) => {
 }
 
 newPage();
+
+
+
+// Call manager prompt
+
+//
