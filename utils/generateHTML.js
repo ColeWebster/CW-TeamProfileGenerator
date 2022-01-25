@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+const generateHTML = ({}) =>
+`<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -80,4 +81,6 @@
 
 </body>
 
-</html>
+</html>`
+
+module.exports = generateHTML;
