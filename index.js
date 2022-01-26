@@ -37,6 +37,29 @@ menu = () => {
                 console.log(manager)
             });
     };
+    createNext = () => {
+        inquirer
+            .prompt ([
+                {
+                    type: 'list',
+                    name: 'selector',
+                    message: 'Would you like to add an additional employee?'
+                    choices: ['Engineer' , 'Intern', 'Exit']
+                }
+            ])
+            .then(answers => {
+                if (Engineer === true){
+                    return createEngineer
+                }
+                else if (Intern === true){
+                    return createIntern
+                }
+                else {
+                    createHTML
+                }
+            })
+    }
+
     createEngineer = () => {
         inquirer
             .prompt([
@@ -96,8 +119,8 @@ menu = () => {
             })
     }
 
-    createManager();
-    createEngineer();
+    // createManager();
+    // createEngineer();
     createIntern();
 }
 
