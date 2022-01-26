@@ -35,6 +35,7 @@ menu = () => {
             .then(({ firstName, id, email, office }) => {
                 const manager = new Manager(firstName, id, email, office);
                 console.log(manager)
+                createNext();
             });
     };
     createNext = () => {
@@ -43,16 +44,17 @@ menu = () => {
                 {
                     type: 'list',
                     name: 'selector',
-                    message: 'Would you like to add an additional employee?'
-                    choices: ['Engineer' , 'Intern', 'Exit']
+                    message: 'Would you like to add an additional employee?',
+                    choices: ['Engineer' , 'Intern', 'Build Team']
                 }
             ])
             .then(answers => {
-                if (Engineer === true){
-                    return createEngineer
+                // console.log(answers);
+                if (answers.selector === 'Engineer'){
+                    createEngineer();
                 }
-                else if (Intern === true){
-                    return createIntern
+                else if (answers.selector === 'Intern'){
+                    createIntern();
                 }
                 else {
                     createHTML
@@ -119,9 +121,9 @@ menu = () => {
             })
     }
 
-    // createManager();
+    createManager();
     // createEngineer();
-    createIntern();
+    // createIntern();
 }
 
 menu();
