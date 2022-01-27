@@ -173,7 +173,7 @@ menu = () => {
                     message: 'Please add the engineers gitHub:'
                 },
             ])
-            .then(({ engineerName, engineerID, engineerEmail, github}) => {
+            .then(({ firstName, id, email, github}) => {
                 const answers = await inquirer.prompt
                 const engineer = new Engineer(firstName, id, email, github);
                 teamMembers.push(Engineer);
