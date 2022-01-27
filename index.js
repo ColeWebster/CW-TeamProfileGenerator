@@ -4,12 +4,13 @@ const inquirer = require('inquirer');
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
+const { inherits } = require('util');
 
 const teamMembers = [];
 
 const generateHTML = (answers) =>
 
-`<!DOCTYPE html>
+    `<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -97,84 +98,89 @@ const generateHTML = (answers) =>
 menu = () => {
     createManager = async () => {
         inquirer.prompt([
-                {
-                    type: 'input',
-                    name: 'firstName',
-                    message: 'Please enter the team managers name:',
-                },
-                {
-                    type: 'input',
-                    name: 'id',
-                    message: 'Please enter the team managers employee ID number:'
-                },
-                {
-                    type: 'input',
-                    name: 'email',
-                    message: 'Please add the team managers email address:'
-                },
-                {
-                    type: 'input',
-                    name: 'office',
-                    message: 'Please add the team managers office number:'
-                },
-            ])
+            {
+                type: 'input',
+                name: 'firstName',
+                message: 'Please enter the team managers name:',
+            },
+            {
+                type: 'input',
+                name: 'id',
+                message: 'Please enter the team managers employee ID number:'
+            },
+            {
+                type: 'input',
+                name: 'email',
+                message: 'Please add the team managers email address:'
+            },
+            {
+                type: 'input',
+                name: 'office',
+                message: 'Please add the team managers office number:'
+            },
+        ])
             .then(({ firstName, id, email, office }) => {
-                const answers = await inquirer.prompt
                 const manager = new Manager(firstName, id, email, office);
                 console.log(manager);
                 teamMembers.push(Manager);
                 createNext();
             });
     };
+
     createNext = () => {
         inquirer
-            .prompt ([
+            .prompt([
                 {
                     type: 'list',
                     name: 'selector',
                     message: 'Would you like to add an additional employee?',
-                    choices: ['Engineer' , 'Intern', 'Build Team']
+                    choices: ['Engineer', 'Intern', 'Build Team']
                 }
             ])
             .then(answers => {
                 // console.log(answers);
-                if (answers.selector === 'Engineer'){
+                if (answers.selector === 'Engineer') {
                     createEngineer();
                 }
-                else if (answers.selector === 'Intern'){
+                if (answers.selector === 'Intern') {
                     createIntern();
                 }
-                else {
-                    .then createHTML = generateHTML
+                if (answers.selector === "Build Team") {
+                    console.log('Successfully created!')
+                    .then(answers) => {
+                        fs.writeFile('./dis/index.html', generateHTML(teamMembers), (err) =>
+                        err ? console.log(err) : console.log('Created!'))
+                    };
                 }
-            })
-    }
+            });
+        }
 
-    createEngineer =async () => {
+
+
+    createEngineer = async () => {
         inquirer.prompt([
-                {
-                    type: 'input',
-                    name: 'firstName',
-                    message: 'Please enter the engineers name:',
-                },
-                {
-                    type: 'input',
-                    name: 'id',
-                    message: 'Please enter the engineers employee ID number:'
-                },
-                {
-                    type: 'input',
-                    name: 'email',
-                    message: 'Please add the team managers email address:'
-                },
-                {
-                    type: 'input',
-                    name: 'github',
-                    message: 'Please add the engineers gitHub:'
-                },
-            ])
-            .then(({ firstName, id, email, github}) => {
-                const answers = await inquirer.prompt
+            {
+                type: 'input',
+                name: 'firstName',
+                message: 'Please enter the engineers name:',
+            },
+            {
+                type: 'input',
+                name: 'id',
+                message: 'Please enter the engineers employee ID number:'
+            },
+            {
+                type: 'input',
+                name: 'email',
+                message: 'Please add the team managers email address:'
+            },
+            {
+                type: 'input',
+                name: 'github',
+                message: 'Please add the engineers gitHub:'
+            },
+        ])
+            .then(({ firstName, id, email, github }) => {
                 const engineer = new Engineer(firstName, id, email, github);
                 teamMembers.push(Engineer);
                 console.log(engineer);
@@ -205,20 +211,14 @@ menu = () => {
                     message: 'Please add the interns current school:'
                 },
             ])
-            .then(({firstName, id, email, university}) => {
-                const answers = await inquirer.prompt
+            .then(({ firstName, id, email, university }) => {
                 const intern = new Intern(firstName, id, email, university);
                 teamMembers.push(Intern);
                 console.log(intern);
-                createNext(); 
+                createNext();
             })
     }
-    generateHTML = () => {
-        console.log('Successfully created!')
-        fs.writeFile('./dis/index.html', buildHTML(teamMembers) , (err) => {
-            if (err) throw err;
-        })
-    }
+
 
     createManager()
 }
