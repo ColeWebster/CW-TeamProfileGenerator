@@ -1,3 +1,0 @@
-function renderCard() {
-    let internCard
-}
