@@ -21,15 +21,20 @@ menu = () => {
     
     createNext = async () => {
         const answers = await inquirer.prompt(createNextQ);
-        switch (answers.choice) {
-            case 'Create Engineer':
+        
+        switch (answers.choices) {
+        
+            case 'Engineer':
                 createEngineer();
                 break;
-            case 'Create Intern':
+        
+            case 'Intern':
                 createIntern();
                 break;
-            case "End the program":
+        
+            case "Build the Team":
                 generateHTML();
+            
             default :
                 console.log("Houston we have a problem")
             break;
