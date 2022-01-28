@@ -12,6 +12,18 @@
 
 -- Added an empty array for teamMember to collect the data and push to add to the array.
 
+## Needed for completion
+
+-- Jest and test for each item
+
+-- HTML to generate from selection in list
+
+-- Intern or Engineer to not stop the prompts
+
+## Walkthrough
+
+[Watch a sample clip of the current functionality of this program](https://watch.screencastify.com/v/i9qNSypc3TODCVqT9pSf)
+
 ## Your Task
 
 Your task is to build a Node.js command-line application that takes in information about employees on a software engineering team, then generates an HTML webpage that displays summaries for each person. Testing is key to making code maintainable, so you’ll also write a unit test for every part of your code and ensure that it passes each test.
