@@ -18,7 +18,24 @@ menu = () => {
         console.log(manager);
         createNext();
     };
-
+    
+    createNext = async () => {
+        const answers = await inquirer.prompt(createNextQ);
+        switch (answers.choice) {
+            case 'Create Engineer':
+                createEngineer();
+                break;
+            case 'Create Intern':
+                createIntern();
+                break;
+            case "End the program":
+                generateHTML();
+            default :
+                console.log("Houston we have a problem")
+            break;
+        }   
+    };
+    
     createEngineer = async () => {
         const answers = await inquirer.prompt(engineerQ);
         const engineer = new Engineer(answers.firstName, answers.id, answers.email, answers.github);
@@ -35,20 +52,6 @@ menu = () => {
         createNext();
     };
 
-    createNext = async () => {
-        const answers = await inquirer.prompt(createNextQ);
-        switch (answers.choice) {
-            case 'Create Engineer':
-                createEngineer();
-                break;
-            case 'Create Intern':
-                createIntern();
-                break;
-            case "End the program":
-                generateHTML();
-
-        }   
-    };
 
     generateHTML = () => {
         fs.writeFile('./dist/index.html', createTeam(teamMembers), (err) => {
