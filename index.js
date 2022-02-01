@@ -18,6 +18,22 @@ menu = () => {
         console.log(manager);
         createNext();
     };
+    
+    createNext = async () => {
+        const answers = await inquirer.prompt(createNextQ);
+        switch (answers.selector) {
+            case 'Engineer':
+                createEngineer();
+                break;
+            case 'Intern':
+                createIntern();
+                break;
+            case "Build my new Team":
+                generateHTML();
+            default :
+                break;
+        }   
+    };
 
     createEngineer = async () => {
         const answers = await inquirer.prompt(engineerQ);
@@ -29,26 +45,12 @@ menu = () => {
 
     createIntern = async () => {
         const answers = await inquirer.prompt(internQ);
-        const engineer = new Intern(answers.firstName, answers.id, answers.email, answers.university);
+        const intern = new Intern(answers.firstName, answers.id, answers.email, answers.university);
         teamMembers.push(intern);
         console.log(intern);
         createNext();
     };
 
-    createNext = async () => {
-        const answers = await inquirer.prompt(createNextQ);
-        switch (answers.choice) {
-            case 'Create Engineer':
-                createEngineer();
-                break;
-            case 'Create Intern':
-                createIntern();
-                break;
-            case "End the program":
-                generateHTML();
-
-        }   
-    };
 
     generateHTML = () => {
         fs.writeFile('./dist/index.html', createTeam(teamMembers), (err) => {
