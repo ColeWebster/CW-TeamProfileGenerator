@@ -18,7 +18,7 @@
 
 -- HTML to generate from selection in list
 
--- Intern or Engineer to not stop the prompts
+
 
 ## Walkthrough
 
