@@ -1,69 +1,102 @@
 const fs = require('fs');
+const fsPromises = require('fs').promises;
 const path = require('path');
+// const {createTeam} = require('./lib/buildPage')
 const inquirer = require('inquirer');
 
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
+const teamMembers = [];
+// const { managerQ, engineerQ, internQ, createNextQ } = require('./lib/questions')
 // const { inherits } = require('util');
 
-const { managerQ, engineerQ, internQ, createNextQ } = require('./lib/questions')
-const createTeam = require('./src/buildPage')
-const teamMembers = [];
-
 menu = () => {
-    createManager = async () => {
-        const answers = await inquirer.prompt(managerQ);
-        console.log(answers);
-        const manager = new Manager(answers.firstName, answers.id, answers.email, answers.officeNumber);
-        teamMembers.push(manager);
-        console.log(manager);
-        createNext();
-    };
+   createManager = () => {
+      inquirer.prompt([
+         {
+            type: 'input',
+            name: 'firstName',
+            message: 'Please enter the team managers name:',
+         },
+         {
+            type: 'input',
+            name: 'id',
+            message: 'Please enter the team managers employee ID number:'
+         },
+         {
+            type: 'input',
+            name: 'email',
+            message: 'Please add the team managers email address:'
+         },
+         {
+            type: 'input',
+            name: 'officeNumber',
+            message: 'Please add the team managers office number:'
+         },
+      ]).then((answers) => {
+         console.log(answers);
+         const manager = new Manager(answers.firstName, answers.id, answers.email, answers.officeNumber);
+         teamMembers.push(manager);
+         console.log(teamMembers);
+         createNewTeamMember();
+      })
+   }
 
-    createEngineer = async () => {
-        const answers = await inquirer.prompt(engineerQ);
-        const engineer = new Engineer(answers.firstName, answers.id, answers.email, answers.github);
-        teamMembers.push(engineer);
-        console.log(engineer);
-        createNext();
-    };
-    
-    createIntern = async () => {
-        const answers = await inquirer.prompt(internQ);
-        const intern = new Intern(answers.firstName, answers.id, answers.email, answers.university);
-        teamMembers.push(intern);
-        console.log(intern);
-        createNext();
-    };
-    
-    generateHTML = () => {
-        // const results = teamMembers;
-        // console.log(results)
-        const page = fs.writeFile(path.join(__dirname, './test.txt'), "Hello", (err) => {
-            if (err) throw err;
-        });
-        return page;
-    }
+   createManager();
 
-    createNext = async () => {
-        const answers = await inquirer.prompt(createNextQ);
-        switch (answers.selector) {
-            case 'Engineer':
-                createEngineer();
-                break;
-            case 'Intern':
-                createIntern();
-                break;
-            case 'Build my new Team':
-                generateHTML();
-                break;
-            default:
-                break;
-        }
-    };
+   createNewTeamMember = () => {
+      inquirer.prompt([
+         {
+            type: 'list',
+            name: 'selector',
+            message: 'Would you like to add an additional employee?',
+            choices: ['Engineer', 'Intern', 'Build my new team']
+         },
+      ]).then((answers => {
+         if (answers === 'Engineer') {
+            console.log('Create Engineer')
+            createEngineer();
+         }   
+         else if (answers === 'Intern') {
+            console.log('Create Intern')
+         }
+         else {
+            console.log('Created team')
+         }
+      }))
+   }
 
-    createManager();
-}
+   createEngineer = () => {
+      inquirer.prompt([
+         {
+            type: 'input',
+            name: 'firstName',
+            message: 'Please enter the engineers name:',
+         },
+         {
+            type: 'input',
+            name: 'id',
+            message: 'Please enter the engineers employee ID number:'
+         },
+         {
+            type: 'input',
+            name: 'email',
+            message: 'Please add the team managers email address:'
+         },
+         {
+            type: 'input',
+            name: 'github',
+            message: 'Please add the engineers gitHub:'
+         },
+      ]).then((answers) => {
+         console.log(answers);
+         const engineer = new Engineer(answers.firstName, answers.id, answers.email, answers.github);
+         teamMembers.push(engineer);
+         console.log(teamMembers);
+         createNewTeamMember();
+      })
+   }
+};
 
 menu();
