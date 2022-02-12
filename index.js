@@ -53,6 +53,7 @@ mainMenu = () => {
    }
 
    createTeam = () => {
+      console.log('Success');
       fs.writeFile('./dist/index.html', buildTeam(teamMembers), (err => {
          if (err) throw err;
       }));
